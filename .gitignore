@@ -2,3 +2,7 @@ node_modules/
 .next/
 .env.local
 build/
+build/
+.wwebjs_cache/
+.vercel/
+node_modules/
