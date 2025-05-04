@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import portada from "./assets/portada.jpg"; // Asegúrate de colocar la imagen en src/assets/portada.jpg
+
 
 
 
@@ -211,9 +211,9 @@ useEffect(() => {
 
   return (
      <div
-      className="min-h-screen p-6 text-blue-900"
+      className="min-h-screen p-6 text-blue-900 bg-no-repeat bg-center bg-contain"
       style={{
-        backgroundImage: `url(${portada})`,
+        backgroundImage: "url('/images/portada.jpg')",
         backgroundSize:     '50% auto',
         backgroundPosition: 'center',
         backgroundRepeat:   'no-repeat',
