@@ -172,7 +172,8 @@ useEffect(() => {
     { descripcion: 'CHAPA ---" - --------------', stock: 1 },
   ];
 
-  setstockchapas(stockchapas);
+    setstockchapas(stockchapas);
+  }  
 }, []);
 
 
