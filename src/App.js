@@ -160,7 +160,7 @@ useEffect(() => {
     { descripcion: 'CHAPA 3/8" - 1500 X 3000 LAC', stock: 1 },
     { descripcion: 'CHAPA 1/2"- 1500 X 3000 LAC', stock: 1 },
     { descripcion: 'CHAPA 3/4"- 1500 X 3000 LAC', stock: 1 },
-    { descripcion: 'CHAPA ---" - --------------', stock: 1 },
+    { descripcion: 'CHAPA 123" - --------------', stock: 1 },
     { descripcion: 'CHAPA ---" - --------------', stock: 1 },
     { descripcion: 'CHAPA ---" - --------------', stock: 1 },
     { descripcion: 'CHAPA ---" - --------------', stock: 1 },
