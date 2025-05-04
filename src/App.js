@@ -36,7 +36,6 @@ export default function App() {
   const [Laminadocaliente, setLaminadocaliente] = useState([]);
   const [largo, setLargo] = useState(0);
   const [errorDolar, setErrorDolar] = useState(false);
-  const [tab, setTab] = useState("cot");
   const machines = ["Laser 1", "Laser 2", "Laser 3", "Laser 4"];
   const [jobs, setJobs] = useState(machines.reduce((acc, m) => ({ ...acc, [m]: [] }), {}));
   const [newJob, setNewJob] = useState("");  
