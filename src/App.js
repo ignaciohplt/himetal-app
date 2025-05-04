@@ -138,7 +138,11 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  const stockchapas = [
+  const saved = localStorage.getItem('stockChapasinicial');
+  if (saved) {
+    setstockchapas(JSON.parse(saved));
+  } else {
+    const stockchapas = [
     { descripcion: 'CHAPA N22 LOZA" - 1300 X 2050 LAC', stock: 1 },
     { descripcion: 'CHAPA N22" - 1220 X 2440 LAF', stock: 1 },
     { descripcion: 'CHAPA N20 LOZA"- 1300 X 2050 LAC', stock: 1 },
@@ -471,6 +475,23 @@ useEffect(() => {
  {tab === 'stock' && (
   <div>
     <h2 className="text-xl font-semibold mb-4">Stock Diario - Chapas</h2>
+    
+{/* 2) Botón para guardar */}
+          <button
+            onClick={() => {
+              localStorage.setItem(
+                "stockChapasinicial",
+                JSON.stringify(stockchapas)
+              );
+              alert("Stock guardado 👍");
+            }}
+            className="mb-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          >
+            💾 Guardar Cambios
+          </button>
+
+
+
     <table className="w-full table-auto border-collapse border border-gray-400">
       <thead>
         <tr>
