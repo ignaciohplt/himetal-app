@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import portada from "./assets/portada.jpg"; // Asegúrate de colocar la imagen en src/assets/portada.jpg
-import generarPdfCotizacion from './lib/generarPdfCotizacion.js';
+import generarPdfCotizacion from '../lib/generarPdfCotizacion.js';
 
 
 const pesosData = [
