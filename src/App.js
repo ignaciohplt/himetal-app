@@ -36,7 +36,11 @@ export default function App() {
   const [Laminadocaliente, setLaminadocaliente] = useState([]);
   const [largo, setLargo] = useState(0);
   const [errorDolar, setErrorDolar] = useState(false);
-
+  const [tab, setTab] = useState("cot");
+  const machines = ["Laser 1", "Laser 2", "Laser 3", "Laser 4"];
+  const [jobs, setJobs] = useState(machines.reduce((acc, m) => ({ ...acc, [m]: [] }), {}));
+  const [newJob, setNewJob] = useState("");  
+  const [activeMachine, setActiveMachine] = useState(machines[0]);
   // Estados para precios Sidersa (placeholder)
 
   const [errorSidersa, setErrorSidersa] = useState(false);
@@ -237,6 +241,17 @@ useEffect(() => {
 >
   Stock Diario
 </button>
+
+
+<div className="flex space-x-4 mb-6">
+  {/* …tus tabs existentes… */}
+  <button
+    className={`px-4 py-2 rounded ${tab === "trabajos" ? "bg-blue-600 text-white" : "bg-blue-200"}`}
+    onClick={() => setTab("trabajos")}
+  >
+    Trabajos
+  </button>
+</div>
 
 
       </div>
@@ -525,6 +540,92 @@ setstockchapas(newStock);
     </table>
   </div>
 )}   
+
+      {/* === TRABAJOS === */}
+      {tab === "trabajos" && (
+        <div>
+          {/* Sub-tabs de máquinas */}
+          <div className="flex space-x-2 mb-4">
+            {machines.map(m => (
+              <button
+                key={m}
+                onClick={() => setActiveMachine(m)}
+                className={`px-3 py-1 rounded ${
+                  activeMachine === m
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+
+          {/* Form para nueva tarea */}
+          <div className="flex space-x-2 mb-4">
+            <input
+              type="text"
+              placeholder={`Nueva tarea en ${activeMachine}`}
+              className="flex-1 border rounded px-2 py-1"
+              value={newJob}
+              onChange={e => setNewJob(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                if (!newJob.trim()) return;
+                setJobs({
+                  ...jobs,
+                  [activeMachine]: [
+                    ...jobs[activeMachine],
+                    newJob.trim()
+                  ]
+                });
+                setNewJob("");
+              }}
+              className="bg-green-500 hover:bg-green-600 text-white rounded px-4"
+            >
+              Añadir
+            </button>
+          </div>
+
+          {/* Tabla de tareas */}
+          <table className="w-full table-auto border-collapse border border-gray-300">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 text-left">Tarea pendiente</th>
+                <th className="px-4 py-2">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs[activeMachine].map((tarea, i) => (
+                <tr key={i} className="even:bg-gray-50">
+                  <td className="px-4 py-2">{tarea}</td>
+                  <td className="px-4 py-2 text-center">
+                    <button
+                      onClick={() =>
+                        setJobs({
+                          ...jobs,
+                          [activeMachine]: jobs[activeMachine].filter((_, j) => j !== i)
+                        })
+                      }
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      Borrar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {jobs[activeMachine].length === 0 && (
+                <tr>
+                  <td colSpan={2} className="px-4 py-2 text-center text-gray-500">
+                    No hay tareas pendientes
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
 
 </div>  
 );
