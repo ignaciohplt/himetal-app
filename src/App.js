@@ -636,5 +636,8 @@ setstockchapas(newStock);
   </div>
 )}
 
+ </div>   
+  );        
+}           
 
   
