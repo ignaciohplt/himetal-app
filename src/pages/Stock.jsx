@@ -1,4 +1,7 @@
+// src/pages/stock.jsx
 import React, { useState, useEffect } from "react";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 const defaultStock = [
   { descripcion: 'CHAPA N22 LOZA" - 1300 X 2050 LAC', stock: 1 },
@@ -25,57 +28,64 @@ const defaultStock = [
 ];
 
 export default function Stock() {
-  const [stockchapas, setStockchapas] = useState([]);
+  const [items, setItems] = useState(defaultStock);
 
+  // 1) Leer de Firestore al montar
   useEffect(() => {
-    const saved = localStorage.getItem("stockInicial");
-    if (saved) {
-      setStockchapas(JSON.parse(saved));
-    } else {
-      setStockchapas(defaultStock);
-    }
+    (async () => {
+      const ref = doc(db, "himetal", "stock");
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        setItems(snap.data().items);
+      }
+    })();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem("stockInicial", JSON.stringify(stockchapas));
-    alert("Stock guardado 👍");
+  // 2) Guardar en Firestore
+  const handleSave = async () => {
+    const ref = doc(db, "himetal", "stock");
+    await setDoc(ref, { items });
+    alert("✔ Stock guardado en la nube");
+  };
+
+  // 3) Actualizar estado al modificar input
+  const updateStock = (idx, value) => {
+    const updated = items.map((it, i) =>
+      i === idx ? { ...it, stock: Number(value) } : it
+    );
+    setItems(updated);
   };
 
   return (
-    <section>
-      <h2 className="text-xl font-semibold mb-4">Stock Diario</h2>
+    <section className="space-y-4">
+      <h2 className="text-xl font-semibold">Stock Diario – Chapas</h2>
+
       <button
-        className="mb-4 bg-green-500 text-white px-4 py-2 rounded"
         onClick={handleSave}
+        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
       >
-        💾 Guardar Cambios
+        💾 Guardar Stock en la nube
       </button>
-      <div className="overflow-x-auto bg-white border border-gray-300">
-        <table className="w-full table-auto">
+
+      <div className="overflow-x-auto bg-white border border-gray-300 rounded">
+        <table className="w-full table-auto border-collapse">
           <thead className="bg-gray-100">
             <tr>
-              <th className="border px-4 py-2">Descripción</th>
-              <th className="border px-4 py-2">Stock</th>
+              <th className="border px-4 py-2 text-left">Descripción</th>
+              <th className="border px-4 py-2 text-center">Stock (unidades)</th>
             </tr>
           </thead>
           <tbody>
-            {stockchapas.map((item, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="border px-4 py-2">{item.descripcion}</td>
-                <td className="border px-4 py-2">
+            {items.map((it, i) => (
+              <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                <td className="border px-4 py-2">{it.descripcion}</td>
+                <td className="border px-4 py-2 text-center">
                   <input
                     type="number"
-                    className="w-20 border rounded px-1 py-0.5"
-                    value={item.stock}
+                    className="border rounded px-2 py-1 w-20 text-right"
+                    value={it.stock}
                     min="0"
-                    onChange={(e) => {
-                      const val = Number(e.target.value);
-                      setStockchapas((prev) =>
-                        prev.map((c, i) =>
-                          i === index ? { ...c, stock: val } : c
-                        )
-                      );
-                    }}
+                    onChange={e => updateStock(i, e.target.value)}
                   />
                 </td>
               </tr>
