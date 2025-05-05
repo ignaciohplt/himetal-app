@@ -10,3 +10,6 @@ node_modules/
 .vercel
 build/
 build/
+
+# Variables de entorno
+.env.local

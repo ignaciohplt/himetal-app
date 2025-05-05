@@ -10,6 +10,7 @@
     "start-whatsapp": "node whatsapp-bot.js"
   },
   "dependencies": {
+    "firebase": "^11.6.1",
     "formidable": "^3.5.4",
     "next": "^15.3.1",
     "pdfkit": "^0.17.0",
