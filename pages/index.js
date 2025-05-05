@@ -1,3 +1,3 @@
 // pages/index.js
-import App from '../src/App';
-export default App;
+import Cotizacion from "../src/pages/Cotizacion.jsx";
+export default Cotizacion;

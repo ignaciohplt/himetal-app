@@ -1,6 +1,10 @@
-// pages/_app.js
-import '../src/index.css';  // ajusta la ruta si tu CSS global está en otro sitio
+import "../src/index.css";
+import Layout from "../src/components/Layout.jsx";
 
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
