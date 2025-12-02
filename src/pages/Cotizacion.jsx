@@ -176,7 +176,7 @@ export default function Cotizacion() {
             <div>
               <label className="font-semibold block">Multiplicador:</label>
               <select className="border rounded px-2 py-1 w-full" value={factor} onChange={e=>setFactor(Number(e.target.value))}>
-                {[1.5,1.7,1.8,1.9,2,2.2,3,10].map(v=><option key={v} value={v}>{v}×</option>)}
+                {[1,1.5,1.7,1.8,1.9,2,2.2,2.3,2.4,2.5,2.6,3,10].map(v=><option key={v} value={v}>{v}×</option>)}
               </select>
             </div>
           )}
