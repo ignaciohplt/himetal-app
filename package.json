@@ -12,7 +12,7 @@
   "dependencies": {
     "firebase": "^11.6.1",
     "formidable": "^3.5.4",
-    "next": "^15.3.1",
+    "next": "15.3.8",
     "pdfkit": "^0.17.0",
     "puppeteer": "^24.7.2",
     "qrcode-terminal": "^0.12.0",
